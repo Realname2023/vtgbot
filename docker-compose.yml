@@ -1,0 +1,44 @@
+version: '3.9'
+
+services:
+  db:
+    container_name: database2
+    image: postgres
+    restart: always
+    
+    ports:
+      - 5432:5432
+    env_file:
+      - ".env"
+
+  adminer:
+    container_name: adminer2
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  redis:
+    image: redis:alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redisdata:/data
+    env_file:
+      - ".env"
+    # environment:
+    #   - REDIS_PASSWORD=my-password
+    #   - REDIS_PORT=6379
+    #   - REDIS_DATABASES=16
+
+  tgbot:
+    container_name: tgbot
+    build:
+      context: .
+    command: python run_bot.py
+    restart: always
+
+    env_file:
+      - ".env"
+
