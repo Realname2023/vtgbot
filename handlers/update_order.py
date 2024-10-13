@@ -9,7 +9,7 @@ from handlers.states import DeleteItem, NewQuant, FSMOrder
 from handlers.order import create_order
 from data_base.orm_query import (get_user_orders, delete_cur_orders, 
                                  delete_cur_order, get_user_order, change_quantity_cur_order,
-                                 change_arenda_time, store_comment)
+                                 change_arenda_time, store_comment, delete_comment)
 from keyboards.client_kb import kb_client, cancel_change_kb
 
 
@@ -175,6 +175,7 @@ async def delete_all_items(call: types.CallbackQuery, session: AsyncSession):
     await call.message.edit_reply_markup()
     user_id = call.from_user.id
     await delete_cur_orders(session, user_id)
+    await delete_comment(user_id)
     await call.message.answer(text='Заказ удален. У вас нет заказов. Выберите товары и создайте заказ',
                               reply_markup=kb_client)
     await call.answer()
