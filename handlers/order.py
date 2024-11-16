@@ -124,6 +124,7 @@ async def send_order(call: types.CallbackQuery, session: AsyncSession):
                     "SOURCE_ID": "UC_SLN7SG",
                     "CONTACT_ID": contact_id,
                     "UF_CRM_1708511776232": client_city,
+                    "ASSIGNED_BY_ID": '7311',
                     "COMMENTS": order}}
     response = await b24rest_request(url_webhook, method_deal_add, parametr_deal_add)
 

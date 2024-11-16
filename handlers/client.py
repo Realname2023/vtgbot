@@ -4,7 +4,7 @@ from aiogram.filters import CommandStart, StateFilter
 from sqlalchemy.ext.asyncio import AsyncSession
 from keyboards.client_kb import kb_client
 from data_base.orm_query import orm_add_user, select_action
-from foundation import all_commands
+from foundation import all_commands, b24rest_request, method_list_deals, url_webhook
 
 
 client_router=Router()
@@ -18,6 +18,11 @@ async def delete_non_command_messages(message: types.Message):
 @client_router.message(CommandStart())
 async def command_start_handler(message: types.Message, session: AsyncSession) -> None:
     photo = FSInputFile('media/VTG.png')
+    parametr_deal_list = {
+        'select': ['*', 'UF_*']
+    }
+    res = await b24rest_request(url_webhook, method_list_deals, parametr_deal_list)
+    print(res)
     user = message.from_user
     await orm_add_user(
         session,
