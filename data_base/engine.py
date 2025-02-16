@@ -6,7 +6,7 @@ DATABASE_URL = f"postgresql+asyncpg://{os.getenv('POSTGRES_USER')}:{os.getenv('P
 
 # engine = create_async_engine(DATABASE_URL, echo=True)
 
-engine = create_async_engine(str(os.getenv('DB_URL')), echo=True)
+engine = create_async_engine(DATABASE_URL, echo=False)
 
 session_maker = async_sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
 
